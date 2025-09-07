@@ -1,4 +1,5 @@
 ﻿@model CheckinGo.Domain.Entites.Villa
+@* @model Villa ----> If _ViewImport file containes its using CheckInGo.Domain.Entites *@
 
 <div class = "w-100 card border-0 p-4">
 	<div class="card-header bg-success bg-gradient ml-0 py-3">
@@ -12,9 +13,12 @@
 	<div class="card-body border p-4">
 		<form method="post" class="row">
 			<div class="p-3">
+				@* If no key added in AddModelError, then below code will word *@
+				@* <div asp-validation-summary="ModelOnly"></div> *@
 				<div class="form-floating py-1 col-12">
 					<input asp-for="Name" class="form-control border shadow" />
 					<label asp-for="Name" class="ms-2"></label>
+					<span asp-validation-for="Name" class="text-danger"></span>
 				</div>
 				<div class="form-floating py-1 col-12">
 					<input asp-for="Description" class="form-control border shadow" />
@@ -23,14 +27,17 @@
 				<div class="form-floating py-1 col-12">
 					<input asp-for="Price" class="form-control border shadow" />
 					<label asp-for="Price" class="ms-2"></label>
+					<span asp-validation-for="Price" class="text-danger"></span>
 				</div>
 				<div class="form-floating py-1 col-12">
 					<input asp-for="Sqft" class="form-control border shadow" />
 					<label asp-for="Sqft" class="ms-2"></label>
+					<span asp-validation-for="Sqft" class="text-danger"></span>
 				</div>
 				<div class="form-floating py-1 col-12">
 					<input asp-for="Occupancy" class="form-control border shadow" />
 					<label asp-for="Occupancy" class="ms-2"></label>
+					<span asp-validation-for="Occupancy" class="text-danger"></span>
 				</div>
 				<div class="form-floating py-1 col-12">
 					<input asp-for="ImageUrl" class="form-control border shadow" />
@@ -52,7 +59,13 @@
 			</div>
 
 		</form>
-
 	</div>
-
 </div>
+
+@section Scripts{
+	@{
+		// <!-- To make client side validation work --> this will include the necessary validation scripts --> Also page will not get refreshed if any validation error
+		// The flow will never go to controller unless all client side validation is passed (i.e the page will not get refresh)
+		<partial name="_ValidationScriptsPartial" />
+	}
+}
