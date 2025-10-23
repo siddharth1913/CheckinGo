@@ -23,9 +23,10 @@ namespace CheckinGo.Domain.Entities
         [ForeignKey("Villa")]
         public int VillaId { get; set; }
 
-        // Navogation property to eastablish FK relation with parent - Villa table
+        
         // To ignore this property in ModelState Validation we can use =>
         [ValidateNever]
+        // Navogation property to eastablish FK relation with parent - Villa table
         public Villa Villa { get; set; }
 
         public string? SpecialDetails { get; set; }

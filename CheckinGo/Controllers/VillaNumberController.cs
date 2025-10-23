@@ -36,7 +36,9 @@ namespace CheckinGo.Controllers
         {
             // modelstate does not gets value for (Public Villa Villa) - this is becasue its a navigation property.
             // To ignore this navigation property by ModelState We Can write =>
-            // ModelState.Remove("Villa");
+            // ModelState.Remove("Villa"); OR can add Attribute [ValidateNever] in Domain class VillaNumber.cs
+
+
             if (ModelState.IsValid)
             {
                 _db.VillaNumbers.Add(villaNumber);
