@@ -1,5 +1,6 @@
 ﻿using CheckinGo.Domain.Entities;
 using CheckinGo.Infrastructure.Data;
+using CheckinGo.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Globalization;
@@ -20,18 +21,37 @@ namespace CheckinGo.Controllers
             return View(VillaNumber);
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
-            //To create a dropdown of Villa =>
-            IEnumerable<SelectListItem> list = _db.Villas.ToList().Select(u => new SelectListItem
+
+            VillaNumberVM villaNumberVM = new()
             {
-                Text = u.Name,
-                Value = u.Id.ToString()
-            });
-            return View();
+                VillaList = _db.Villas.ToList().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                })
+            };
+            #region ============== VIEWDATA or VIEWBAG METHOD ==============
+            // ---------------- IF WE WANT TO USE VIEWDATE or VIEWBAG ----------------
+            //To create a dropdown of Villa =>
+            //IEnumerable<SelectListItem> list = _db.Villas.ToList().Select(u => new SelectListItem
+            //{
+            //    Text = u.Name,
+            //    Value = u.Id.ToString()
+            //});
+            // We need to pass this collection (list) into view but can not pass directly because view is expecting VillaNumber model, instead of IEnumerable<SelectListItem>
+            // So we can use ViewData dynamic property to pass this list to view.
+            // ViewData = transfer data from controller to view using key-value pair.
+            //ViewData["VillaList"] = list;
+            #endregion
+
+            return View(villaNumberVM);
 
         }
 
+        [HttpPost]
         public IActionResult Create(VillaNumber villaNumber)
         {
             // modelstate does not gets value for (Public Villa Villa) - this is becasue its a navigation property.
